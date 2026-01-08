@@ -1,0 +1,5 @@
+{
+  "name": "HUMANOS – Digital Twin for Human Decisions",
+  "description": "An MVP demonstration of a human decision simulation layer. Designed for a hackathon to show how LLMs can act as Monte Carlo simulation engines for personal career paths.",
+  "requestFramePermissions": []
+}
