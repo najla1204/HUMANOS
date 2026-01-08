@@ -20,7 +20,6 @@ import {
   Monitor,
   Key,
   ExternalLink,
-  Cpu,
   AlertTriangle,
   RefreshCw
 } from 'lucide-react';
@@ -111,7 +110,7 @@ const GlassCard: React.FC<{ children?: React.ReactNode, className?: string, bord
 export default function App() {
   const [step, setStep] = useState<AppStep>(AppStep.ONBOARDING);
   const [isLanding, setIsLanding] = useState(true);
-  const [modelTier, setModelTier] = useState<'gemini-3-pro-preview' | 'gemini-3-flash-preview'>('gemini-3-pro-preview');
+
   const [profile, setProfile] = useState<UserTwinProfile>({
     name: '',
     major: '',
@@ -171,7 +170,7 @@ export default function App() {
   const executeSimulation = async () => {
     setStep(AppStep.SIMULATING);
     try {
-      const result = await runDecisionSimulation(profile, scenarioA, scenarioB, modelTier);
+      const result = await runDecisionSimulation(profile, scenarioA, scenarioB);
       const record: SimulationRecord = {
         id: Math.random().toString(36).substr(2, 9),
         timestamp: Date.now(),
@@ -238,7 +237,7 @@ export default function App() {
                 </div>
                 <h2 className="text-3xl font-display font-black mb-4">Neural Link Required</h2>
                 <p className="text-gray-400 mb-10 text-sm leading-relaxed max-w-[280px] mx-auto">
-                  To power high-fidelity <b>Stochastic Pro</b> simulations, connect your Gemini API key from a paid project.
+                  To power high-fidelity simulations, connect your Gemini API key.
                 </p>
                 
                 {isBridgeUnavailable && (
@@ -393,22 +392,7 @@ export default function App() {
                 </GlassCard>
               </div>
 
-              <div className="max-w-md mx-auto">
-                <div className="flex items-center justify-between p-1 bg-white/[0.03] border border-white/10 rounded-2xl">
-                  <button 
-                    onClick={() => setModelTier('gemini-3-flash-preview')}
-                    className={`flex-1 py-4 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${modelTier === 'gemini-3-flash-preview' ? 'bg-white/10 text-white shadow-lg' : 'text-gray-600 hover:text-gray-400'}`}
-                  >
-                    <Zap size={14} /> Instant Flash
-                  </button>
-                  <button 
-                    onClick={() => setModelTier('gemini-3-pro-preview')}
-                    className={`flex-1 py-4 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${modelTier === 'gemini-3-pro-preview' ? 'bg-cyan-400 text-black shadow-[0_0_20px_rgba(34,211,238,0.3)]' : 'text-gray-600 hover:text-gray-400'}`}
-                  >
-                    <Cpu size={14} /> Stochastic Pro
-                  </button>
-                </div>
-              </div>
+
               
               <div className="flex justify-center gap-4">
                 <button onClick={() => setStep(AppStep.ONBOARDING)} className="px-6 py-4 rounded-xl border border-white/10 hover:bg-white/5 transition-colors text-gray-500"><ArrowLeft /></button>
@@ -433,7 +417,7 @@ export default function App() {
               </div>
               <h3 className="text-2xl font-display font-black tracking-tight mb-2 text-white">Neural Path Synthesis</h3>
               <p className="text-cyan-400/50 text-[9px] uppercase font-black tracking-[0.4em] animate-pulse">
-                {modelTier === 'gemini-3-pro-preview' ? 'PROJECTING STOCHASTIC OUTCOMES...' : 'GENERATING FAST SNAPSHOT...'}
+                GENERATING FAST SNAPSHOT...
               </p>
             </div>
           )}
@@ -447,7 +431,7 @@ export default function App() {
                 </div>
                 <div className="bg-white/[0.03] px-8 py-4 rounded-2xl border border-white/5 text-right">
                   <div className="text-[9px] uppercase font-black text-gray-600 tracking-[0.2em] mb-1">Sim Coherence</div>
-                  <div className="text-3xl font-display font-black text-cyan-400">{modelTier === 'gemini-3-pro-preview' ? '98.4%' : '84.2%'}</div>
+                  <div className="text-3xl font-display font-black text-cyan-400">84.2%</div>
                 </div>
               </div>
 

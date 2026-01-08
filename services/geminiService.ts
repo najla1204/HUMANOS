@@ -5,8 +5,7 @@ import { UserTwinProfile, Scenario, SimulationResult } from "../types.ts";
 export const runDecisionSimulation = async (
   profile: UserTwinProfile,
   scenarioA: Scenario,
-  scenarioB: Scenario,
-  modelTier: 'gemini-3-pro-preview' | 'gemini-3-flash-preview' = 'gemini-3-pro-preview'
+  scenarioB: Scenario
 ): Promise<SimulationResult> => {
   // Guidelines: Create a new instance right before making an API call 
   // to ensure it always uses the most up-to-date API key from the dialog.
@@ -31,11 +30,9 @@ export const runDecisionSimulation = async (
 
   try {
     const response = await ai.models.generateContent({
-      model: modelTier, 
+      model: 'gemini-3-flash-preview', 
       contents: prompt,
       config: {
-        // Higher thinking budget for Pro model to handle complex stochastic reasoning.
-        ...(modelTier === 'gemini-3-pro-preview' ? { thinkingConfig: { thinkingBudget: 32768 } } : {}),
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
